@@ -1,0 +1,16 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/Get-Java/config-server.git
+          default-label: master
+          clone-on-start: true
+          force-pull: true
+          username: aquadevv
+          password: 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
