@@ -45,7 +45,8 @@ jobs:
         run: |
           ./gradlew bootBuildImage \
             --imageName=${IMAGE_NAME}:${IMAGE_TAG} \
-            --imageName=${IMAGE_NAME}:latest
+            --tags=${IMAGE_NAME}:latest \
+            --publishImage
 
       - name: Confirm published images
         run: |
