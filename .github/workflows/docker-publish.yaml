@@ -42,16 +42,22 @@ jobs:
         run: |
           IMAGE_BASE="ghcr.io/${GITHUB_REPOSITORY,,}"
           echo "IMAGE_BASE=$IMAGE_BASE" >> $GITHUB_ENV
+          echo "IMAGE_TAG=${GITHUB_SHA}" >> $GITHUB_ENV
+          echo "IMAGE_NAME=$IMAGE_BASE:$IMAGE_TAG" >> $GITHUB_ENV
+          echo "IMAGE_NAME_LATEST=$IMAGE_BASE:latest" >> $GITHUB_ENV
 
-      - name: Build & publish Docker image via Buildpacks
-        env:
-          IMAGE_TAG: ${{ github.sha }}
+      - name: Build and publish image using Buildpacks
         run: |
           ./gradlew bootBuildImage \
-            --imageName=${IMAGE_BASE}:${IMAGE_TAG} \
-            --publishImage \
-            -Dspring-boot.build-image.tags=${IMAGE_BASE}:latest
+          --imageName=$IMAGE_NAME \
+          --publishImage
+
+      - name: Tag image as latest and push
+        run: |
+          docker tag $IMAGE_NAME $IMAGE_NAME_LATEST
+          docker push $IMAGE_NAME_LATEST
 
       - name: Confirm published images
         run: |
-          echo "Images published to ${IMAGE_NAME}:${IMAGE_TAG} and ${IMAGE_NAME}:latest"
+          echo "Published: $IMAGE_NAME"
+          echo "Published: $IMAGE_NAME_LATEST"
