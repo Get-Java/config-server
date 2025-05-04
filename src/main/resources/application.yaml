@@ -16,7 +16,7 @@ spring:
           clone-on-start: true
           force-pull: true
           username: aquadevv
-          password: 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
+          password: ${PASSWORD_GITHUB_TOKEN}
           search-paths: "{application}"
 
 eureka:
