@@ -38,15 +38,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and publish Docker image
+      - name: Build & publish Docker image via Buildpacks
         env:
           IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/${{ github.repository.name }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
           ./gradlew bootBuildImage \
             --imageName=${IMAGE_NAME}:${IMAGE_TAG} \
-            --tags=${IMAGE_NAME}:latest \
-            --publishImage
+            --publishImage \
+            -Pspring-boot.build-image.tags=${IMAGE_NAME}:latest
 
       - name: Confirm published images
         run: |
