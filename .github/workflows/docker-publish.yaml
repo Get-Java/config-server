@@ -49,7 +49,7 @@ jobs:
       - name: Build and publish image using Buildpacks
         run: |
           ./gradlew bootBuildImage \
-          --imageName=$IMAGE_NAME \
+          --imageName=${IMAGE_BASE}:${IMAGE_TAG} \
           --publishImage
 
       - name: Tag image as latest and push
