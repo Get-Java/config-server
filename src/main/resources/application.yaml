@@ -11,7 +11,7 @@ spring:
         service-id: config-server
       server:
         git:
-          uri: https://github.com/Get-Java/configs.git
+          uri: https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/Get-Java/configs.git
           default-label: master
           clone-on-start: true
           force-pull: true
