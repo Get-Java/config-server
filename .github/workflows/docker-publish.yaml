@@ -1,0 +1,49 @@
+name: Build and Publish Docker Images
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+
+jobs:
+  publish-images:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'gradle'
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and publish Docker image
+        env:
+          IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/${{ github.repository.name }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          ./gradlew bootBuildImage \
+            --imageName=${IMAGE_NAME}:${IMAGE_TAG} \
+            --imageName=${IMAGE_NAME}:latest
+
+      - name: Confirm published images
+        run: |
+          echo "Images published to ${IMAGE_NAME}:${IMAGE_TAG} and ${IMAGE_NAME}:latest"

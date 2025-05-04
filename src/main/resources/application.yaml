@@ -6,11 +6,20 @@ spring:
     name: config-server
   cloud:
     config:
+      discovery:
+        enabled: true
+        service-id: config-server
       server:
         git:
-          uri: https://github.com/Get-Java/config-server.git
+          uri: https://github.com/Get-Java/configs.git
           default-label: master
           clone-on-start: true
           force-pull: true
           username: aquadevv
           password: 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
+          search-paths: "{application}"
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
