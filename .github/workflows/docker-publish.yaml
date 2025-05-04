@@ -48,7 +48,7 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           ./gradlew bootBuildImage \
-            --imageName=${IMAGE_BASE}:${IMAGE_SHA} \
+            --imageName=${IMAGE_BASE}:${IMAGE_TAG} \
             --publishImage \
             -Dspring-boot.build-image.tags=${IMAGE_BASE}:latest
 
