@@ -17,9 +17,10 @@ spring:
           force-pull: true
           search-paths: "{application}"
         bootstrap: true
+
 eureka:
   client:
     service-url:
-      defaultZone: ${EUREKA_URI:http://localhost:8010/eureka}
+      defaultZone: ${EUREKA_URI}
   instance:
     preferIpAddress: true
