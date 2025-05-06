@@ -31,7 +31,7 @@ ENV JAVA_NATIVE_MEMORY_TRACKING_OPTS="-XX:NativeMemoryTracking=summary -XX:+Unlo
 EXPOSE 8888
 
 HEALTHCHECK --interval=60s --timeout=5s --start-period=30s --retries=3 \
-  CMD ["sh", "-c", "exec wget -qO- http://localhost:9191/actuator/health | grep -q '\"status\":\"UP\"'"]
+  CMD ["sh", "-c", "exec wget -qO- http://localhost:8888/actuator/health | grep -q '\"status\":\"UP\"'"]
 
 ENTRYPOINT ["sh", "-c", "exec java \
     $JAVA_HEAP_DUMP_OPTS \
