@@ -15,8 +15,8 @@ spring:
           default-label: master
           clone-on-start: true
           force-pull: true
-          search-paths: "{application}"
-        bootstrap: true
+          search-paths:
+            - "{application}"
 
 eureka:
   client:
